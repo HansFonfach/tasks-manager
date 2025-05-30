@@ -2,13 +2,10 @@ const request = require("supertest");
 const express = require("express");
 const bodyParser = require("body-parser");
 
-// Mock service y controladores (los tuyos de verdad, o mocks)
 const taskService = require("../services/taskService");
 
-// Mock io con jest.fn()
 const ioMock = { emit: jest.fn() };
 
-const tasksController = require("../controllers/tasks")(ioMock);
 const tasksRoutes = require("../routes/tasks")(ioMock);
 
 const app = express();
