@@ -31,7 +31,7 @@ npm install
 3. Crear archivo `.env` en la raíz del proyecto con el siguiente contenido:
 
 ```
-PORT=3000
+PORT=80808080
 ```
 
 > Nota: No es necesario configurar variables para la base de datos, ya que SQLite se maneja localmente.
@@ -41,7 +41,8 @@ PORT=3000
 ```bash
 node app.js
 ```
-> Nota: tambien puede utilizar el comando  nodemon app.js, para no tener que bajar e iniciar el servidor constantemente.
+
+> Nota: tambien puede utilizar el comando nodemon app.js, para no tener que bajar e iniciar el servidor constantemente.
 
 ---
 
@@ -70,9 +71,10 @@ node app.js
 }
 ```
 
-- **Notas:**  
-  - El campo `descripcion` es opcional.  
-  - Si no se envía `descripcion`, el valor por defecto será cadena vacía `""` (no `null`).  
+- **Notas:**
+
+  - El campo `descripcion` es opcional.
+  - Si no se envía `descripcion`, el valor por defecto será cadena vacía `""` (no `null`).
   - El campo `status` se asigna automáticamente como `"pendiente"` al crear la tarea.
 
 - **Respuesta exitosa:**
@@ -125,8 +127,9 @@ node app.js
 }
 ```
 
-- **Notas:**  
-  - Solo es posible actualizar el campo `status`.  
+- **Notas:**
+
+  - Solo es posible actualizar el campo `status`.
   - El campo `status` solo acepta los valores `"pendiente"` o `"aprobada"`.
   - No se puede actualizar la descripción mediante este endpoint.
 
@@ -168,18 +171,18 @@ node app.js
 1. Abre Postman.
 2. Para crear tarea:
    - Método: POST
-   - URL: `http://localhost:3000/tasks`
+   - URL: `http://localhost:8080/tasks`
    - Body: raw JSON con `{ "titulo": "mi tarea", "descripcion": "opcional" }` o sin descripción `{ "titulo": "mi tarea" }`
 3. Para obtener tareas:
    - Método: GET
-   - URL: `http://localhost:3000/tasks`
+   - URL: `http://localhost:8080/tasks`
 4. Para actualizar tarea:
    - Método: PUT
-   - URL: `http://localhost:3000/tasks/1` (cambia 1 por el id)
+   - URL: `http://localhost:8080/tasks/1` (cambia 1 por el id)
    - Body: raw JSON con `{ "status": "aprobada" }`
 5. Para eliminar tarea:
    - Método: DELETE
-   - URL: `http://localhost:3000/tasks/1`
+   - URL: `http://localhost:8080/tasks/1`
 
 ---
 
@@ -188,31 +191,31 @@ node app.js
 - Crear tarea con descripción:
 
 ```bash
-curl -X POST http://localhost:3000/tasks -H "Content-Type: application/json" -d '{"titulo":"mi tarea","descripcion":"opcional"}'
+curl -X POST http://localhost:8080/tasks -H "Content-Type: application/json" -d '{"titulo":"mi tarea","descripcion":"opcional"}'
 ```
 
 - Crear tarea sin descripción (valor por defecto `""`):
 
 ```bash
-curl -X POST http://localhost:3000/tasks -H "Content-Type: application/json" -d '{"titulo":"mi tarea"}'
+curl -X POST http://localhost:8080/tasks -H "Content-Type: application/json" -d '{"titulo":"mi tarea"}'
 ```
 
 - Obtener tareas:
 
 ```bash
-curl http://localhost:3000/tasks
+curl http://localhost:8080/tasks
 ```
 
 - Actualizar tarea (solo estado):
 
 ```bash
-curl -X PUT http://localhost:3000/tasks/1 -H "Content-Type: application/json" -d '{"status":"aprobada"}'
+curl -X PUT http://localhost:8080/tasks/1 -H "Content-Type: application/json" -d '{"status":"aprobada"}'
 ```
 
 - Eliminar tarea:
 
 ```bash
-curl -X DELETE http://localhost:3000/tasks/1
+curl -X DELETE http://localhost:8080/tasks/1
 ```
 
 ---
