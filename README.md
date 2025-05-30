@@ -11,9 +11,9 @@ Aplicación backend para gestión de tareas con almacenamiento en SQLite y notif
 1. Clonar el repositorio:
 
 
-git clone <url-del-repositorio>
+git clone https://github.com/HansFonfach/tasks-manager
 
-cd <nombre-carpeta>
+cd tasks-manager
 
 
 2. Instalar dependencias:
@@ -31,8 +31,8 @@ por defecto el puerto en http://localhost:8080 (lo puedes configurar para usar o
 ## Uso y funcionalidades
 
 - CRUD de tareas con API REST.
-- Validaciones de entradas para los endopint.
-- Notificaciones en tiempo rela con websocket con Socket.io
+- Validaciones de entradas para los endpoint.
+- Notificaciones en tiempo real con websocket con Socket.io
 - Las tareas con estado "eliminada" no son visibles.
 
 ## Diseño y consideraciones
@@ -45,10 +45,10 @@ por defecto el puerto en http://localhost:8080 (lo puedes configurar para usar o
 
 ## Como probar WebSocket
 
-- Una vez ejecutada la aplicación, abrir el navegador y dirijase a : http://localhost:8080/test.html (el 8080, va a depender del puerto configurado)
+- Una vez ejecutada la aplicación, abrir el navegador y diríjase a : http://localhost:8080/test.html (el 8080, va a depender del puerto configurado)
 - Usar postman o curl para manipular las tareas mediante la API REST:
 . crear tarea: POST /tasks
 . Actualizar tarea: PUT /tasks/:id
 . Eliminar tarea: DELETE /tasks/:id 
-- Si todo sale bien, deberias ver los datos de la tarea reflejados en tiempo real.
+- Si todo sale bien, deberías ver los datos de la tarea reflejados en tiempo real.
 
