@@ -1,8 +1,16 @@
+
 # Proyecto Tareas con Express, Sequelize y Socket.io
 
 ## Descripción
 
-Aplicación backend para gestión de tareas con almacenamiento en SQLite y notificaciones en tiempo real vía WebSocket con Socket.io.
+Aplicación backend para gestión de tareas con almacenamiento en SQLite y notificaciones en tiempo real vía WebSocket usando Socket.io.
+
+---
+
+## Requisitos previos
+
+- Node.js (v14 o superior recomendado)
+- npm (gestor de paquetes de Node)
 
 ---
 
@@ -10,45 +18,69 @@ Aplicación backend para gestión de tareas con almacenamiento en SQLite y notif
 
 1. Clonar el repositorio:
 
-
+```bash
 git clone https://github.com/HansFonfach/tasks-manager
-
 cd tasks-manager
-
+```
 
 2. Instalar dependencias:
 
+```bash
 npm install
+```
 
-No es necesario que configures variables de entorno para la bd, ya que si usas SQLite, la base de datos se guarda localmente en un archivo dentro del proyecto.
+No es necesario configurar variables de entorno para la base de datos si usas SQLite, ya que se guarda localmente en un archivo dentro del proyecto.
 
-3. Ejecución de la aplicación.
+3. Ejecutar la aplicación:
 
+```bash
 npm start
+```
 
-por defecto el puerto en http://localhost:8080 (lo puedes configurar para usar otro puerto)
+Por defecto, la aplicación se ejecuta en (http://localhost:8080), pero puedes cambiar el puerto en el archivo `.env`.
 
-## Uso y funcionalidades
+---
 
-- CRUD de tareas con API REST.
-- Validaciones de entradas para los endpoint.
-- Notificaciones en tiempo real con websocket con Socket.io
-- Las tareas con estado "eliminada" no son visibles.
+## Archivos ignorados
+
+El proyecto incluye un `.gitignore` que excluye:
+- `node_modules/`
+- `database.sqlite`
+- `.env`
+
+Si clonas el proyecto:
+- Ejecuta `npm install` para reconstruir las dependencias.
+- La base de datos SQLite se creará automáticamente al iniciar el servidor (gracias a `sequelize.sync()`).
+
+---
+
+## Endpoints principales
+
+- Obtener todas las tareas: `GET /tasks`
+- Crear tarea: `POST /tasks`
+- Actualizar tarea: `PUT /tasks/:id`
+- Eliminar tarea (soft delete): `DELETE /tasks/:id`
+
+---
+
+## Cómo probar WebSocket
+
+1. Ejecuta la aplicación (`npm start`).
+2. Abre en tu navegador:
+   [http://localhost:8080/test.html]
+3. Usa Postman o cURL para enviar peticiones a los endpoints (ver sección anterior).
+4. Si todo funciona bien, deberías ver las actualizaciones reflejadas en tiempo real en la página.
+
+---
 
 ## Diseño y consideraciones
 
-- Uso de SQLite para persistencia ligera, sin tener que instalar base de datos.
-- Las tablas se crean automáticamente con sequelize.sync() al iniciar el servidor.
-- Websocket está integrado directamente en el servidor de Express.
-- Eventos de Socket.io para la sincronización de clientes en tiempo real.
-- Los campos opcionales fueron manejados con valores por defecto para evitar "null".
+- Uso de SQLite para persistencia ligera, sin necesidad de instalar un servidor de base de datos.
+- Las tablas se crean automáticamente usando `sequelize.sync()` al arrancar el servidor.
+- WebSocket integrado directamente con el servidor Express usando Socket.io.
+- Las tareas eliminadas no se eliminan físicamente: se marcan con estado `eliminada` (soft delete) y se filtran al consultar.
+- Los campos opcionales, como la descripción, se manejan con valores por defecto para evitar mostrar `null`.
+- La API incluye validaciones básicas para asegurar la integridad de los datos.
 
-## Como probar WebSocket
-
-- Una vez ejecutada la aplicación, abrir el navegador y diríjase a : http://localhost:8080/test.html (el 8080, va a depender del puerto configurado)
-- Usar postman o curl para manipular las tareas mediante la API REST:
-. crear tarea: POST /tasks
-. Actualizar tarea: PUT /tasks/:id
-. Eliminar tarea: DELETE /tasks/:id 
-- Si todo sale bien, deberías ver los datos de la tarea reflejados en tiempo real.
+---
 
