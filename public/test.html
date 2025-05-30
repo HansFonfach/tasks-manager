@@ -1,0 +1,87 @@
+<!DOCTYPE html>
+<html lang="es">
+
+<head>
+  <meta charset="UTF-8" />
+  <title>Prueba Socket.io</title>
+  <script src="/socket.io/socket.io.js"></script>
+</head>
+
+<body>
+  <h1>Prueba Socket.io</h1>
+  <div id="log"></div>
+  <ul id="taskList"></ul>
+
+  <script>
+    const socket = io();
+    const log = document.getElementById('log');
+    const taskList = document.getElementById('taskList');
+
+    const tasks = {};
+
+
+    function renderTasks() {
+      taskList.innerHTML = '';
+      Object.values(tasks).forEach(task => {
+        const li = document.createElement('li');
+        li.id = `task-${task.id}`;
+        li.textContent = `${task.titulo} - ${task.descripcion} [${task.status}]`;
+        taskList.appendChild(li);
+      });
+    }
+
+
+    socket.on('connect', async () => {
+      log.innerHTML += `<p>Conectado con ID: ${socket.id}</p>`;
+
+
+      const res = await fetch('/tasks');
+      const data = await res.json();
+
+      data.forEach(task => {
+        if (task.status !== 'eliminada') {
+          tasks[task.id] = task;
+        }
+      });
+
+      renderTasks();
+    });
+
+
+    socket.on('newTask', (taskData) => {
+      const task = taskData.payload;
+      tasks[task.id] = task;
+      renderTasks();
+      log.innerHTML += `<p>Tarea creada: ${JSON.stringify(task)}</p>`;
+    });
+
+
+    socket.on('taskUpdated', (taskData) => {
+      const { id, status } = taskData.payload;
+      if (tasks[id]) {
+        tasks[id].status = status;
+        if (status === 'eliminada') {
+          delete tasks[id];
+        }
+        renderTasks();
+      }
+      log.innerHTML += `<p>Tarea actualizada: ${JSON.stringify(taskData)}</p>`;
+    });
+
+
+    socket.on('taskDeleted', (taskData) => {
+      const { id } = taskData.payload;
+      if (tasks[id]) {
+        delete tasks[id];
+        renderTasks();
+      }
+      log.innerHTML += `<p>Tarea eliminada: ${JSON.stringify(taskData)}</p>`;
+    });
+
+    socket.on('disconnect', () => {
+      log.innerHTML += '<p>Desconectado</p>';
+    });
+  </script>
+</body>
+
+</html>
