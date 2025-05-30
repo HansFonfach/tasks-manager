@@ -6,6 +6,10 @@ class Server {
   constructor() {
     this.app = express();
     this.port = process.env.PORT;
+     if (!this.port) {
+      console.error("Error: Variable de entorno PORT no definida. Por favor, configure el archivo .env. Si tiene dudas consulte el archivo Readme.md");
+      process.exit(1); 
+    }
 
     this.server = http.createServer(this.app);
     this.io = new SocketIOServer(this.server);
