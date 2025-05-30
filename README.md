@@ -1,4 +1,3 @@
-
 # Proyecto Tareas con Express, Sequelize y Socket.io
 
 ## Descripción
@@ -44,11 +43,13 @@ Por defecto, la aplicación se ejecuta en (http://localhost:8080), pero puedes c
 ## Archivos ignorados
 
 El proyecto incluye un `.gitignore` que excluye:
+
 - `node_modules/`
 - `database.sqlite`
 - `.env`
 
 Si clonas el proyecto:
+
 - Ejecuta `npm install` para reconstruir las dependencias.
 - La base de datos SQLite se creará automáticamente al iniciar el servidor (gracias a `sequelize.sync()`).
 
@@ -84,3 +85,9 @@ Si clonas el proyecto:
 
 ---
 
+## Ejecutar pruebas
+
+- Para correr las pruebas integradas utiliza el siguiente comando:
+- npm test
+- Estas pruebas cubren las rutas principales y validaciones de entrada.
+  Nota: No se implementaron pruebas unitarias para la lógica interna, ya que se usó express-validator para la validación y los tests se enfocan en el comportamiento de las rutas.
