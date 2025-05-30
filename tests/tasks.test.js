@@ -103,3 +103,35 @@ describe("API Tasks", () => {
     expect(ioMock.emit).not.toHaveBeenCalled();
   });
 });
+test("POST /tasks con título vacío devuelve error 400", async () => {
+  const res = await request(app)
+    .post("/tasks")
+    .send({ titulo: "", descripcion: "Descripción opcional" });
+
+  expect(res.statusCode).toBe(400);
+  expect(res.body.errors).toEqual(
+    expect.arrayContaining([
+      expect.objectContaining({
+        msg: "El título es obligatorio.",
+        path: "titulo",
+      }),
+    ])
+  );
+});
+
+test("POST /tasks con título demasiado largo devuelve error 400", async () => {
+  const longTitle = "a".repeat(101);
+  const res = await request(app)
+    .post("/tasks")
+    .send({ titulo: longTitle, descripcion: "Descripción opcional" });
+
+  expect(res.statusCode).toBe(400);
+  expect(res.body.errors).toEqual(
+    expect.arrayContaining([
+      expect.objectContaining({
+        msg: "El título no puede superar 100 caracteres.",
+        path: "titulo",
+      }),
+    ])
+  );
+});
